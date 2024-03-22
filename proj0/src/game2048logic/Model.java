@@ -177,7 +177,6 @@ public class Model {
         for (int i = board.size() - 1 ; i > y; i--){
             /* 有问题 中间隔了一个也能合并 例如 2 4 2， 向右走会合并成 4 4 */
             Tile t = tile(x, i);
-            Tile t1 = tile(x, i-1);
             if ( t == null){
                 board.move(x, i, currTile);
                 break;
