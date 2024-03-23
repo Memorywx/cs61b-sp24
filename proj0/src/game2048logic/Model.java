@@ -154,7 +154,7 @@ public class Model {
 
     /**
      * Moves the tile at position (x, y) as far up as possible.
-     *
+
      * Rules for Tilt:
      * 1. If two Tiles are adjacent in the direction of motion and have
      *    the same value, they are merged into one Tile of twice the original
@@ -182,6 +182,7 @@ public class Model {
                 break;
             }else if ( t.value() == myValue && !t.wasMerged() && !currTile.wasMerged()){
                 board.move(x, i, currTile);
+                score += myValue * 2;
                 break;
 
             }
