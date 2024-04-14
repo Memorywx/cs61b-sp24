@@ -142,5 +142,8 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         p.addLast(9);
         p.addLast(7);
         p.addFirst(4);
+        Deque61B<String> someList = new LinkedListDeque61B<>();
+        someList.addFirst("ELK");
+        System.out.println(someList.get(0));
     }
 }
