@@ -28,6 +28,66 @@ public class ArrayDeque61BTest {
     }
 
     @Test
+    public void add_last_from_empty(){
+        Deque61B<Integer> L = new ArrayDeque61B<>();
+        L.addLast(6); // [null, 6]
+        L.addFirst(1);
+        assertThat(L.toList()).containsExactly(1, 6).inOrder();
+    }
+
+    @Test
+    public void add_first_nonempty(){
+        Deque61B<String> L = new ArrayDeque61B<>();
+        L.addLast("hah");
+        L.addLast("wowowo");
+        L.addFirst("lalala");
+        assertThat(L.toList()).containsExactly("lalala", "hah", "wowowo").inOrder();
+    }
+
+    @Test
+    public void add_last_nonempty(){
+        Deque61B<String> L = new ArrayDeque61B<>();
+        L.addFirst("lalala");
+        L.addLast("666");
+        L.addLast("apple");
+        L.addLast("pink");
+        assertThat(L.toList()).containsExactly("lalala", "666", "apple", "pink").inOrder();
+    }
+
+    @Test
+    public void add_first_trigger_resize(){
+        Deque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(5);
+        l.addLast(7);
+        l.addFirst(99);
+        l.addLast(88);
+        l.addFirst(666);
+        l.addLast(777);
+        l.addLast(333);
+        l.addLast(489); // [5, 7, 88, 777, 333, 489, 666, 99]
+        l.addFirst(969);
+        assertThat(l.toList()).containsExactly(666, 99, 5, 7, 88, 777, 333, 489, null).inOrder();
+    }
+
+
+    @Test
+    public void add_last_trigger_resize(){
+        Deque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(5);
+        l.addLast(7);
+        l.addFirst(99);
+        l.addLast(88);
+        l.addFirst(666);
+        l.addLast(777);
+        l.addLast(333);
+        l.addLast(489); // [5, 7, 88, 777, 333, 489, 666, 99]
+        l.addLast(31686);
+        assertThat(l.toList()).containsExactly(666, 99, 5, 7, 88, 777, 333, 489, 31686).inOrder();
+    }
+
+
+
+    @Test
     public void add_first_full_size(){
         Deque61B<Integer> L = new ArrayDeque61B<>();
         L.addFirst(6); // [6]
