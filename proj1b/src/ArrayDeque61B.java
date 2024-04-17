@@ -19,14 +19,14 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     public void whetherResize(){
         if ( items.length >= 16 && size < items.length * 0.25){
-            reduceSize(items.length / 2);
+            resize(items.length / 2);
         } else if (size == items.length) {
-            increaseSize(size * 2);
+            resize(size * 2);
         }
 
     }
 
-    private void reduceSize(int capability){
+    private void resize(int capability){
         T[] newItems = (T[]) new Object[capability];
         int index = Math.floorMod(nextFirst + 1, items.length);
         for (int i=0; i < size; i++) {
@@ -38,17 +38,6 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         items = newItems;
     }
 
-    private void increaseSize(int capability){
-        T[] newItems = (T[]) new Object[capability];
-        int index = Math.floorMod(nextFirst + 1, items.length);
-        for (int i = 0; i < size; i++) {
-            newItems[i] = items[index];
-            index = Math.floorMod(index + 1, items.length);
-        }
-        nextFirst = newItems.length - 1;
-        nextLast = size;
-        items = newItems;
-    }
 
     @Override
     public void addFirst(T x) {
@@ -99,6 +88,7 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         T deletedItem = items[deletedIndex];
         items[deletedIndex] = null;
         nextFirst = Math.floorMod(nextFirst + 1, items.length);
+        size--;
 
         return deletedItem;
     }
@@ -114,6 +104,7 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         T deletedItem = items[deletedIndex];
         items[deletedIndex] = null;
         nextLast = Math.floorMod(nextLast - 1, items.length);
+        size--;
 
         return deletedItem;
     }

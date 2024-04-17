@@ -86,30 +86,55 @@ public class ArrayDeque61BTest {
     }
 
 
+    @Test
+    public void add_first_after_remove_to_empty() {
+        Deque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(6);
+        l.addLast(9);
+        l.addLast(7);
+        l.removeFirst();
+        l.removeLast();
+        l.removeLast();
+        l.addFirst(999);
+        assertThat(l.toList()).containsExactly(999).inOrder();
+
+
+    }
 
     @Test
-    public void add_first_full_size(){
-        Deque61B<Integer> L = new ArrayDeque61B<>();
-        L.addFirst(6); // [6]
-        L.addFirst(9); // [6 ...  9]
-        L.addLast(8);  // [6, 8, ... 9]
-        L.addLast(1);  // [6, 8, 1, ..., 9]
-        L.addLast(3);  // [6, 8, 1, 3, ..., 9]
-        L.addFirst(5); // [6, 8, 1, 3, ..., 5, 9]
-        L.addFirst(2); // [6, 8, 1, 3, ..., 2, 5, 9]
-        L.addFirst(7); // [6, 8, 1, 3, 7, 2, 5, 9]
-        L.addLast(6);
-//        L.addFirst(10);
-//        L.addLast(99);
-//        L.addFirst(88);
-//        L.addFirst(77);
-//        L.addFirst(66);
-//        L.addLast(55);
-//        L.addFirst(44);
-//        L.addLast(33);
-        assertThat(L.toList()).containsExactly(7, 2, 5, 9, 6, 8, 1, 3, 6).inOrder();
-//        assertThat(L.toList()).containsExactly(44,66,77,88,10,7, 2, 5, 9, 6, 8, 1, 3, 6, 99,55,33).inOrder();
+    public void add_last_after_remove_to_empty() {
+        Deque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(6);
+        l.addLast(9);
+        l.addLast(7);
+        l.removeLast();
+        l.removeLast();
+        l.removeLast();
+        l.addLast(999);
+        assertThat(l.toList()).containsExactly(999).inOrder();
+
+
     }
+
+    @Test
+    public void remove_first(){
+        Deque61B<String> l = new ArrayDeque61B<>();
+        l.addFirst("haha");
+        l.addLast("666");
+        l.removeFirst();
+        assertThat(l.toList()).containsExactly(null);
+    }
+
+    @Test
+    public void remove_last(){
+        Deque61B<String> l = new ArrayDeque61B<>();
+        l.addFirst("haha");
+        l.addLast("666");
+        l.removeLast();
+        assertThat(l.toList()).containsExactly("haha");
+    }
+
+
 
     @Test void remove_test(){
         Deque61B<Integer> L = new ArrayDeque61B<>();
