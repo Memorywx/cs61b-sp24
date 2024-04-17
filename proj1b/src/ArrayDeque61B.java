@@ -81,7 +81,7 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         if (isEmpty()){
             return null;
         }
-        whetherResize();
+
         // nextFirst 是从右向左循环移动的，删除first的话, 需要让它向右循环移动一次
         // 专门写一个 deletedIndex，只是为了代码更好读懂 TnT
         int deletedIndex = Math.floorMod(nextFirst + 1, items.length);
@@ -89,6 +89,8 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         items[deletedIndex] = null;
         nextFirst = Math.floorMod(nextFirst + 1, items.length);
         size--;
+        // remove的是否resize应在size--之后判断
+        whetherResize();
 
         return deletedItem;
     }
@@ -98,13 +100,15 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         if (isEmpty()) {
             return null;
         }
-        whetherResize();
+
         // nextFirst 是从左向右循环移动的，删除last的话, 需要让它向左循环移动一次
         int deletedIndex = Math.floorMod(nextLast - 1, items.length);
         T deletedItem = items[deletedIndex];
         items[deletedIndex] = null;
         nextLast = Math.floorMod(nextLast - 1, items.length);
         size--;
+        // remove的是否resize应在size--之后判断
+        whetherResize();
 
         return deletedItem;
     }
