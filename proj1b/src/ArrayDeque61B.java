@@ -128,4 +128,19 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
     public T getRecursive(int index) {
         throw new UnsupportedOperationException("No need to implement getRecursive for proj 1b");
     }
+
+    public void printDeque(){
+        for (int i = Math.floorMod(nextFirst+1, items.length) ; i != nextLast; i = Math.floorMod(i+1, items.length)){
+            System.out.print(items[i] + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(777);
+        l.addLast(999);
+        l.addFirst(4886);
+        l.addLast(984);
+        l.printDeque();
+    }
 }

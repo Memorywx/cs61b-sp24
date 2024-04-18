@@ -158,4 +158,28 @@ public class ArrayDeque61BTest {
        assertThat(L.toList()).containsExactly(6, 8, null, null, null, 2, 5, 9).inOrder();
     }
 
+
+    @Test
+    public void get_valid(){
+        Deque61B<String> l = new ArrayDeque61B<>();
+        l.addFirst("7");
+        l.addFirst("999");
+        l.addFirst("888");
+        assertThat(l.get(2)).isEqualTo("7");
+    }
+
+    @Test
+    public void get_oob_large(){
+        Deque61B<String> l = new ArrayDeque61B<>();
+        l.addFirst("haha");
+        l.addFirst("888");
+        assertThat(l.get(2)).isEqualTo(null);
+    }
+
+    @Test
+    public void get_oob_neg() {
+        Deque61B<Integer> l = new ArrayDeque61B<>();
+        l.addFirst(9);
+        assertThat(l.get(-1)).isEqualTo(null);
+    }
 }
