@@ -161,13 +161,32 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return new LinkedListDeque61BIterator();
+        return new LinkedListDeque61BIterator<T>();
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o ) {
+            return true;
+        }
+
+        if ( o instanceof LinkedListDeque61B<?> otherLD) {  // 检查是否是LinkedListDeque61B
+            if ( this.size != otherLD.size) {   // 检查size是否相等
+                return false;
+            }
+            Node p = (Node) otherLD.sentinel.next;
+            for ( T x : this) {
+                if ( x.equals(p.item) ) {
+                    p = p.next;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+
+    }
 
     public static void main(String[] args) {
         Deque61B<String> l = new LinkedListDeque61B<>();
@@ -181,5 +200,17 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
         for (String i : l){
             System.out.println(i);
         }
+
+        Deque61B<Integer> l1 = new LinkedListDeque61B<>();
+        l1.addFirst(965);
+        l1.addLast(45846);
+        l1.addFirst(746);
+
+        Deque61B<Integer> l2 = new LinkedListDeque61B<>();
+        l2.addFirst(965);
+        l2.addLast(45846);
+        l2.addFirst(746);
+
+        System.out.println(l1.equals(l2));
     }
 }

@@ -127,23 +127,23 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         throw new UnsupportedOperationException("No need to implement getRecursive for proj 1b");
     }
 
-    public void printDeque(){
-        for (int i = Math.floorMod(nextFirst+1, items.length) ; i != nextLast; i = Math.floorMod(i+1, items.length)){
-            System.out.print(items[i] + " ");
-        }
-    }
+//    public void printDeque(){
+//        for (int i = Math.floorMod(nextFirst+1, items.length) ; i != nextLast; i = Math.floorMod(i+1, items.length)){
+//            System.out.print(items[i] + " ");
+//        }
+//    }
 
     public class ArrayDeque61BIterator<T> implements Iterator<T>{
         private int wizPos;
-        private int length;
+        private int s;
 
         public ArrayDeque61BIterator(){
             wizPos = Math.floorMod(nextFirst + 1, items.length);
-            length = 0;
+            s = 0;
         }
         @Override
         public boolean hasNext() {
-            return length < size;
+            return s < size;
             // 本来是写成 return wizPos != nextLast
             // 但是size等于 8 时，wizPos 正好等于 nextLast，所以什么都不会打印出来
         }
@@ -152,7 +152,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         public T next() {
             T returnItem = (T) items[wizPos];
             wizPos = Math.floorMod(wizPos + 1, items.length);
-            length++;
+            s++;
             return returnItem;
         }
     }
@@ -162,25 +162,48 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return new ArrayDeque61BIterator();
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o) {
+            return true;
+        }
+
+        if ( o instanceof ArrayDeque61B<?> otherArrayDeque) { // 检查是否是ArrayDeque61B
+            if ( this.size != otherArrayDeque.size) {      // 检查size是否相等
+                return false;
+            }
+            int index = 0;
+            for ( T x : this) {
+//                System.out.println(x);
+//                System.out.println(otherArrayDeque.get(index));
+                if ( x.equals(otherArrayDeque.get(index)) ) {
+                    index++;      // 一开始我写的是 x == otherArrayDeque.get(index)
+                }else {           // 但是非常奇怪，我addFirst的数字较小时，得到的结果就为true，
+                    return false; // 数字大时，为false   原因：java的自动装箱操作
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         Deque61B<String> l = new ArrayDeque61B<>();
-        l.addFirst("55");
-        l.addFirst("985");
-        l.addLast("9999");
-        l.addLast("44884");
-        l.addLast("9449948");
-        l.addFirst("884");
-        l.addLast("74898");
-        l.addFirst("8888888");
-        l.removeLast();
-        l.removeFirst();
-        for (String i : l){
-            System.out.println(i);
-        }
+        l.addFirst("haha");
+        l.addFirst("wx");
+
+        Deque61B<String> l2 = new ArrayDeque61B<>();
+        l2.addFirst("haha");
+        l2.addFirst("wx");
+        System.out.println(l.equals(l2));
+
+        Deque61B<Integer> l3 = new ArrayDeque61B<>();
+        l3.addFirst(6);
+        l3.addFirst(128);
+
+        Deque61B<Integer> l4 = new ArrayDeque61B<>();
+        l4.addFirst(6);
+        l4.addFirst(128);
+        System.out.println(l3.equals(l4));
     }
 }
