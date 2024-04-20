@@ -188,6 +188,20 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
 
     }
 
+    @Override
+    public String toString() {
+        StringBuilder x = new StringBuilder();
+        x.append("{ ");
+
+        for ( T i : this) {
+            x.append(i.toString());
+            x.append(" ");
+        }
+        x.append("}");
+        return x.toString();
+    }
+
+
     public static void main(String[] args) {
         Deque61B<String> l = new LinkedListDeque61B<>();
         l.addFirst("haha");
@@ -212,5 +226,6 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
         l2.addFirst(746);
 
         System.out.println(l1.equals(l2));
+        System.out.println(l);
     }
 }
