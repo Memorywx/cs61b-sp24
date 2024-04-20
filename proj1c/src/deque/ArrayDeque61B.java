@@ -187,6 +187,19 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return false;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder x = new StringBuilder();
+        x.append("{ ");
+
+        for ( T i : this ) {
+            x.append(i.toString());
+            x.append(" ");
+        }
+        x.append("}");
+        return x.toString();
+    }
+
     public static void main(String[] args) {
         Deque61B<String> l = new ArrayDeque61B<>();
         l.addFirst("haha");
@@ -205,5 +218,6 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         l4.addFirst(6);
         l4.addFirst(128);
         System.out.println(l3.equals(l4));
+        System.out.println(l);
     }
 }
