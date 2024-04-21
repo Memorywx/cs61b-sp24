@@ -77,4 +77,18 @@ public interface Deque61B<T> extends Iterable<T>{
      * @return element at {@code index} in the deque
      */
     T getRecursive(int index);
+
+//    @Override
+//    default public String toString() {
+//        StringBuilder x = new StringBuilder();
+//        x.append("{ ");
+//
+//        for ( T i : this ) {
+//            x.append(i.toString());
+//            x.append(" ");
+//        }
+//        x.append("}");
+//        return x.toString();
+//    }
+
 }
