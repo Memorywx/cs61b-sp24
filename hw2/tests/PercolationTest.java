@@ -82,7 +82,22 @@ public class PercolationTest {
     //       write some more tests and delete the fail() line
     @Test
     public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
+        // fail("Did you write your own tests?");
+        int N = 5;
+        Percolation p = new Percolation(N);
+        p.open(0, 2);
+        p.open(1,2);
+        p.open(2,2);
+        p.open(3,2);
+        p.open(4,2);
+        assertThat(p.percolates()).isTrue();
+
+        p.open(4,4);
+        p.open(3,4);
+
+        // 测试ppt中的isFull存在的问题
+        assertThat(p.isFull(4,4)).isFalse();
+        assertThat(p.isFull(3,4)).isFalse();
     }
 
 }
