@@ -1,37 +1,29 @@
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable<K>> implements Map61B{
-    // 每个节点都有一对key和value
-    // BSTMap 只对比key的大小, key 和 key 之间比较
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
+    private class Node {
+        private K key;
+        private V value;
+        private Node left;
+        private Node right;
 
-    private class BST<V extends Comparable<V>>{
-        // 每个节点都有一个value
-        // value 和 value 之间比较
-        private V v;
-        private BST T;
-
-        private BST(V value) {
-            v = value;
-            T = null;
-        }
-
-        private BST insert(V value) {
-            return null;
-        }
-
-        private BST find(V value) {
-            return null;
-        }
-
-        private BST delete(V value) {
-            return null;
+        private Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+            left = null;
+            right = null;
         }
     }
 
+    private int size;
+    private Node bstMap;
 
-
-
+    public BSTMap() {
+        size = 0;
+        bstMap = null;
+    }
 
     /**
      * Associates the specified value with the specified key in this map.
@@ -42,7 +34,31 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * @param value
      */
     @Override
-    public void put(Object key, Object value) {
+    public void put(K key, V value) {
+        bstMap = putHelper(key, value, bstMap);
+
+    }
+
+    private Node putHelper(K key, V value, Node T) {
+        if (T == null) {
+            size++;
+            return new Node(key, value);
+        }
+
+        int compareResult = key.compareTo(T.key);
+
+        /* 千万不能写成bstMap.left = putHelper(key,value, bstMap.left)
+        * 变量名是T就写T  */
+        if (compareResult > 0) {
+            T.right = putHelper(key, value, T.right);
+        }else if (compareResult < 0) {
+            T.left = putHelper(key, value, T.left);
+        } else {
+            T.value = value;   // key == this.key 的情况 ，则更新value
+        }
+
+        return T;
+
 
     }
 
@@ -53,8 +69,26 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * @param key
      */
     @Override
-    public Object get(Object key) {
-        return null;
+    public V get(K key) {
+        Node returnNode = getHelper(key, bstMap);
+        return returnNode == null ? null : returnNode.value;
+    }
+
+    public Node getHelper(K k, Node T) {
+        if (T == null) {
+            return null;
+        }
+        int compareResult = k.compareTo(T.key);
+        if ( compareResult > 0) {
+            return getHelper(k, T.right);
+        }
+
+        if (compareResult < 0) {
+            return getHelper(k, T.left);
+        }
+
+        // key == T.key 的情况，则返回value
+        return T;
     }
 
     /**
@@ -63,8 +97,8 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * @param key
      */
     @Override
-    public boolean containsKey(Object key) {
-        return false;
+    public boolean containsKey(K key) {
+        return getHelper(key, bstMap) != null;
     }
 
     /**
@@ -72,7 +106,7 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -80,7 +114,8 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      */
     @Override
     public void clear() {
-
+        size = 0;
+        this.bstMap = null;
     }
 
     /**
@@ -88,8 +123,8 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * If you don't implement this, throw an UnsupportedOperationException.
      */
     @Override
-    public Set keySet() {
-        return null;
+    public Set<K> keySet() {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -101,8 +136,8 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * @param key
      */
     @Override
-    public Object remove(Object key) {
-        return null;
+    public V remove(K key) {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -111,7 +146,7 @@ public class BSTMap<K extends Comparable<K>> implements Map61B{
      * @return an Iterator.
      */
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<K> iterator() {
+        throw new UnsupportedOperationException();
     }
 }
