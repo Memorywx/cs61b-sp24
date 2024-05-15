@@ -1,6 +1,8 @@
 package ngrams;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -17,11 +19,13 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public static final int MIN_YEAR = 1400;
     public static final int MAX_YEAR = 2100;
 
+
     /**
      * Constructs a new empty TimeSeries.
      */
     public TimeSeries() {
         super();
+
     }
 
     /**
@@ -31,14 +35,25 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         // TODO: Fill in this constructor.
+        int tmp = endYear;
+        while (tmp <= endYear) {
+            if (ts.containsKey(tmp)) {
+                this.put(tmp, ts.get(tmp));
+                tmp++;
+            }
+        }
     }
-
     /**
      * Returns all years for this TimeSeries (in any order).
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        List<Integer> returnYears = new ArrayList<>();
+        for(Map.Entry<Integer, Double> entry : this.entrySet()) {
+            Integer key = entry.getKey();
+            returnYears.add(key);
+        }
+        return returnYears;
     }
 
     /**
@@ -47,7 +62,12 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        List<Double> returnData = new ArrayList<>();
+        for (Map.Entry<Integer,Double> entry : this.entrySet()) {
+            Double value = entry.getValue();
+            returnData.add(value);
+        }
+        return returnData;
     }
 
     /**
@@ -61,7 +81,19 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries sumSeries = new TimeSeries();
+        sumSeries.putAll(ts);      // 把ts里的全部复制过来
+
+        for(Map.Entry<Integer, Double> entry : this.entrySet()) {  // 再复制this的，已含有的年份就更新value
+            Integer key = entry.getKey();
+            Double value = entry.getValue();
+
+            if (sumSeries.containsKey(key)) {
+                value += sumSeries.get(key);
+            }
+            sumSeries.put(key, value);
+        }
+        return sumSeries;
     }
 
     /**
@@ -75,7 +107,23 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries divideSeries = new TimeSeries();
+        divideSeries.putAll(this);
+
+        for (Map.Entry<Integer,Double> entry : ts.entrySet()) {
+            Integer key = entry.getKey();
+            Double value = entry.getValue();
+
+            if (divideSeries.containsKey(key)) {
+                if (!ts.containsKey(key)) {
+                    throw new IllegalArgumentException();
+                }
+                value = divideSeries.get(key) / value;
+                divideSeries.put(key, value);
+            }
+        }
+
+        return divideSeries;
     }
 
     // TODO: Add any private helper methods.
