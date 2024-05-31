@@ -39,11 +39,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
 
         for (Collection<Node> currentBucket : buckets) {
-            Iterator<Node> iterator = currentBucket.iterator();
-            Node currentNode;
-
-            while (iterator.hasNext()) {
-                currentNode = iterator.next();
+//            Iterator<Node> iterator = currentBucket.iterator();
+//            Node currentNode;
+//
+//            while (iterator.hasNext()) {
+//                currentNode = iterator.next();
+//                int keyHash = hash(currentNode.key, newBuckets.length);
+//                newBuckets[keyHash].add(currentNode);
+            for (Node currentNode : currentBucket) {
                 int keyHash = hash(currentNode.key, newBuckets.length);
                 newBuckets[keyHash].add(currentNode);
             }
@@ -62,14 +65,20 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public void put(K key, V value) {
         int keyHash = hash(key, buckets.length);
 
-        Iterator<Node> iterator = buckets[keyHash].iterator();
-        Node currentNode;
-
-        while (iterator.hasNext()) {
-            currentNode = iterator.next();
-
+//        Iterator<Node> iterator = buckets[keyHash].iterator();
+//        Node currentNode;
+//
+//        while (iterator.hasNext()) {
+//            currentNode = iterator.next();
+//
+//            if (currentNode.key.equals(key)) {
+//                currentNode.value = value;    // 找到了，更新value
+//                return;
+//            }
+//        }
+        for (Node currentNode : buckets[keyHash]) {
             if (currentNode.key.equals(key)) {
-                currentNode.value = value;    // 找到了，更新value
+                currentNode.value = value;
                 return;
             }
         }
@@ -93,14 +102,19 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public V get(K key) {
         int keyHash = hash(key, buckets.length);
 
-        Iterator<Node> iterator = buckets[keyHash].iterator();
-        Node currentNode;
-
-        while (iterator.hasNext()) {
-            currentNode = iterator.next();
-
-            if (currentNode.key.equals(key)) {
-                return currentNode.value;
+//        Iterator<Node> iterator = buckets[keyHash].iterator();
+//        Node currentNode;
+//
+//        while (iterator.hasNext()) {
+//            currentNode = iterator.next();
+//
+//            if (currentNode.key.equals(key)) {
+//                return currentNode.value;
+//            }
+//        }
+        for (Node p : buckets[keyHash]) {
+            if (p.key.equals(key)) {
+                return p.value;
             }
         }
         return null;
@@ -115,12 +129,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public boolean containsKey(K key) {
         int keyHash = hash(key, buckets.length);
 
-        Iterator<Node> iterator = buckets[keyHash].iterator();
-        Node currentNode;
-
-        while (iterator.hasNext()) {
-            currentNode = iterator.next();
-
+        for (Node currentNode : buckets[keyHash]) {
             if (currentNode.key.equals(key)) {
                 return true;
             }
