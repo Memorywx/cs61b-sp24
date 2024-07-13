@@ -66,13 +66,13 @@ public class ArrayDeque61BTest {
         l.addLast(333);
         l.addLast(489); // [5, 7, 88, 777, 333, 489, 666, 99]
         l.addFirst(969);
-        assertThat(l.toList()).containsExactly(666, 99, 5, 7, 88, 777, 333, 489, null).inOrder();
+        assertThat(l.toList()).containsExactly(969,666,99,5,7,88,777,333,489).inOrder();
     }
 
 
     @Test
     public void add_last_trigger_resize(){
-        Deque61B<Integer> l = new ArrayDeque61B<>();
+        ArrayDeque61B<Integer> l = new ArrayDeque61B<>();
         l.addFirst(5);
         l.addLast(7);
         l.addFirst(99);
@@ -83,6 +83,7 @@ public class ArrayDeque61BTest {
         l.addLast(489); // [5, 7, 88, 777, 333, 489, 666, 99]
         l.addLast(31686);
         assertThat(l.toList()).containsExactly(666, 99, 5, 7, 88, 777, 333, 489, 31686).inOrder();
+        assertThat(l.getItemsLength()==16);
     }
 
 
@@ -122,7 +123,7 @@ public class ArrayDeque61BTest {
         l.addFirst("haha");
         l.addLast("666");
         l.removeFirst();
-        assertThat(l.toList()).containsExactly(null);
+        assertThat(l.toList()).containsExactly("666");
     }
 
     @Test
@@ -137,7 +138,7 @@ public class ArrayDeque61BTest {
 
 
     @Test void remove_test(){
-        Deque61B<Integer> L = new ArrayDeque61B<>();
+        ArrayDeque61B<Integer> L = new ArrayDeque61B<>();
         L.addFirst(6); // [6]
         L.addFirst(9); // [6 ...  9]
         L.addLast(8);  // [6, 8, ... 9]
@@ -155,7 +156,8 @@ public class ArrayDeque61BTest {
         L.removeLast();
         L.removeLast();
 
-       assertThat(L.toList()).containsExactly(6, 8, null, null, null, 2, 5, 9).inOrder();
+       assertThat(L.toList()).containsExactly(2, 5, 9).inOrder();
+       assertThat(L.getItemsLength()==8);
     }
 
 
